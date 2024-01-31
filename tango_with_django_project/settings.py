@@ -124,4 +124,4 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/images/fat_bear.jpg/'
+STATIC_URL = 'http://127.0.0.1:8000/static/images/fat_bear.jpg/'
