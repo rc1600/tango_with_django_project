@@ -56,9 +56,10 @@ def add_page(cat, title, url, views=0):
 
 
 def add_cat(name, views=0, likes=0):
-    c = Category.objects.get_or_create(name=name, views=views, likes=likes)[0]
-    c.save()
-    return c
+    category, created = Category.objects.get_or_create(name=name, defaults={'views': views, 'likes': likes})
+    if not created:
+        print(f'Category "{name}" already exists. Using existing category.')
+    return category
 
 
 if __name__ == '__main__':
