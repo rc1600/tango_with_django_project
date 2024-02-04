@@ -33,15 +33,15 @@
         </div>
 
         <div id="pages">
-            {% if top_pages %}
-                <h2>Top 5 Most Viewed Pages</h2>
+            {% if pages %}
+                <h2>Most Viewed Pages</h2>
                 <ul>
-                    {% for page in top_pages %}
+                    {% for page in pages %}
                         <li><a href="{{ page.url }}" target="_blank">{{ page.title }}</a></li>
                     {% endfor %}
                 </ul>
             {% else %}
-                {{ no_pages_message }}
+                <strong>{{ no_pages_message }}</strong>
             {% endif %}
         </div>
 
