@@ -26,22 +26,22 @@
                 {% endfor %}
             </ul>
         {% else %}
-            <ul>
-                <strong>There are no categories present.</strong>
-            </ul>
+            <p>
+            <strong>There are no categories present.</strong>
+            </p>
         {% endif %}
         </div>
 
         <div id="pages">
-            {% if pages %}
+            {% if top_pages %}
                 <h2>Most Viewed Pages</h2>
                 <ul>
-                    {% for page in pages %}
+                    {% for page in top_pages %}
                         <li><a href="{{ page.url }}" target="_blank">{{ page.title }}</a></li>
                     {% endfor %}
                 </ul>
             {% else %}
-                <strong>{{ no_pages_message }}</strong>
+            <strong>{{ no_pages_message }}</strong>
             {% endif %}
         </div>
 
@@ -53,12 +53,12 @@
             {% if categories %}
                 <h2>Most Liked Categories</h2>
                 <ul>
-                    {% for category in categories_list %}
+                    {% for category in categories %}
                         <li><a href="{% url 'rango:show_category' category.slug %}">{{ category.name }}</a></li>
                     {% endfor %}
                 </ul>
             {% else %}
-                <strong>No categories currently available.</strong>
+            <strong>No categories currently available.</strong>
             {% endif %}
         </div>
 
