@@ -24,6 +24,7 @@ def index(request):
         'categories': category_list,
         'top_pages': top_pages,
         'no_pages_message': "There are no pages present.",
+        'pages': top_pages,
     }
 
     # Render the response and send it back!
