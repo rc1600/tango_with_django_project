@@ -36,6 +36,37 @@
             <img src="{% static 'images/rango.jpg' %}"
                 alt="Picture of Rango" />
 		</div>
+
+        <div id="pages">
+            {% if top_pages %}
+                <h2>Top 5 Most Viewed Pages</h2>
+                <ul>
+                    {% for page in top_pages %}
+                        <li><a href="{{ page.url }}" target="_blank">{{ page.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                {{ no_pages_message }}
+            {% endif %}
+        </div>
+
+        <div id="back-to-index">
+            <a href="{% url 'rango:index' %}">Back to Index</a>
+        </div>
+
+        <div id="liked-categories">
+            {% if categories %}
+                <h2>Most Liked Categories</h2>
+                <ul>
+                    {% for category in categories %}
+                        <li><a href="{% url 'rango:show_category' category.slug %}">{{ category.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <strong>No categories currently available.</strong>
+            {% endif %}
+        </div>
+
 	</body>
 	
 </html>

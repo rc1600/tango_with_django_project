@@ -16,6 +16,13 @@ def index(request):
     context_dict = {}
     context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
     context_dict['categories'] = category_list
+    # Retrieve the top 5 most viewed pages
+    top_pages = Page.objects.order_by('-views')[:5]
+    context_dict['top_pages'] = top_pages
+
+    # Check if there are no pages present
+    if not top_pages:
+        context_dict['no_pages_message'] = '<strong>There are no pages present.</strong>'
     # Render the response and send it back!
     return render(request, 'rango/index.html', context=context_dict)
 
