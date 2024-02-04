@@ -25,7 +25,7 @@
             <strong>No pages currently in category.</strong>
             {% endif %}
         {% else %}
-            The specified category does not exist.
+            <p>The specified category does not exist. <a href="{% url 'rango:index' %}">Back to homepage</a></p>
         {% endif %}
         </div>
     </body>
