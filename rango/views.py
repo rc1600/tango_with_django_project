@@ -7,31 +7,33 @@ def example_view(request):
     return HttpResponse('This is an example view.')
 
 def index(request):
-    # Query the database for a list of ALL categories currently stored.
-    # Order the categories by the number of likes in descending order.
-    # Retrieve the top 5 only -- or all if less than 5.
-    # Place the list in our context_dict dictionary (with our boldmessage!)
-    # that will be passed to the template engine.
-    category_list = Category.objects.order_by('-likes')[:5]
+    def index(request):
+        # Query the database for a list of ALL categories currently stored.
+        # Order the categories by the number of likes in descending order.
+        # Retrieve the top 5 only -- or all if less than 5.
+        # Place the list in our context_dict dictionary (with our bold message!)
+        # that will be passed to the template engine.
+        category_list = Category.objects.order_by('-likes')[:5]
 
-    # Retrieve the top 5 most viewed pages
-    top_pages = Page.objects.order_by('-views')[:5]
+        # Retrieve the top 5 most viewed pages
+        top_pages = Page.objects.order_by('-views')[:5]
 
-    # Check if there are no pages present
-    if not top_pages:
-        no_pages_message = '<strong>There are no pages present.</strong>'
-    else:
-        no_pages_message = None
+        context_dict = {
+            'boldmessage': "Crunchy, creamy, cookie, candy, cupcake!",
+            'categories': category_list,
+            'top_pages': top_pages,
+            'no_pages_message': "There are no pages present.",
+            'pages': top_pages,  # Update this line to include the actual list of pages
+        }
 
-    context_dict = {'boldmessage': "Crunchy, creamy, cookie, candy, cupcake!",
-                    'categories': category_list,  # Change 'categories' to 'category_list'
-                    'top_pages': top_pages,
-                    'no_pages_message': "There are no pages present.",
-                    'pages': [],
-                    }
+        # Check if there are no pages present
+        if not top_pages:
+            context_dict['no_pages_message'] = '<strong>There are no pages present.</strong>'
 
-    # Render the response and send it back!
-    return render(request, 'rango/index.html', context=context_dict)
+
+
+        # Render the response and send it back!
+        return render(request, 'rango/index.html', context=context_dict)
 
 
 def show_category(request, category_name_slug):
