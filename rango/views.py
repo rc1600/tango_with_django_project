@@ -23,13 +23,12 @@ def index(request):
     else:
         no_pages_message = None
 
-    context_dict = {
-        'boldmessage': "Crunchy, creamy, cookie, candy, cupcake!",
-        'categories': category_list,
-        'top_pages': top_pages,
-        'no_pages_message': "There are no pages present.",
-        'pages': [],  # Add this line
-    }
+    context_dict = {'boldmessage': "Crunchy, creamy, cookie, candy, cupcake!",
+                    'categories': category_list,  # Change 'categories' to 'category_list'
+                    'top_pages': top_pages,
+                    'no_pages_message': "There are no pages present.",
+                    'pages': [],
+                    }
 
     # Render the response and send it back!
     return render(request, 'rango/index.html', context=context_dict)
