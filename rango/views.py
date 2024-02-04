@@ -3,8 +3,10 @@ from django.shortcuts import render
 from rango.models import Category
 from rango.models import Page
 
+
 def example_view(request):
     return HttpResponse('This is an example view.')
+
 
 def index(request):
     # Query the database for a list of ALL categories currently stored.
@@ -22,12 +24,7 @@ def index(request):
         'categories': category_list,
         'top_pages': top_pages,
         'no_pages_message': "There are no pages present.",
-        'pages': top_pages,  # Update this line to include the actual list of pages
     }
-
-    # Check if there are no pages present
-    if not top_pages:
-        context_dict['no_pages_message'] = '<strong>There are no pages present.</strong>'
 
     # Render the response and send it back!
     return render(request, 'rango/index.html', context=context_dict)
@@ -59,6 +56,7 @@ def show_category(request, category_name_slug):
         context_dict['pages'] = []
         # Go render the response and return it to the client.
     return render(request, 'rango/category.html', context=context_dict)
+
 
 def about(request):
     return render(request, 'rango/about.html')
