@@ -64,7 +64,12 @@ def show_category(request, category_name_slug):
 
 
 def about(request):
-    return render(request, 'rango/about.html')
+    # prints out whether the method is a GET or a POST
+    print(request.method)
+    # prints out the username, if no one is logged in it prints `AnonymousUser`
+    print(request.user)
+    return render(request, 'rango/about.html', {})
+
 
 
 def add_category(request):
@@ -78,7 +83,7 @@ def add_category(request):
             form.save(commit=True)
             # Now that the category is saved, we could confirm this.
             # For now, just redirect the user back to the index view.
-            return redirect('/rango/')
+            return redirect(reverse('rango:index'))
         else:
             # The supplied form contained errors
             # just print them to the terminal.
@@ -112,3 +117,4 @@ def add_page(request, category_name_slug):
 
     context_dict = {'form': form, 'category': category}
     return render(request, 'rango/add_page.html', context=context_dict)
+
