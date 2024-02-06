@@ -1,24 +1,9 @@
-{% extends 'rango/base.html' %}
-{% load staticfiles %}
-
-{% block title_block %}
-    Category List
-{% endblock %}
-
-{% block body_block %}
-    <ul>
-        {% if categories %}
-            {% for c in categories %}
-                <li>
-                    {% if c == current_category %}
-                        <strong><a href="{% url 'rango:show_category' slug=c.slug %}">{{ c.name }}</a></strong>
-                    {% else %}
-                        <a href="{% url 'rango:show_category' slug=c.slug %}">{{ c.name }}</a>
-                    {% endif %}
-                </li>
-            {% endfor %}
+<ul>
+    {% for c in categories %}
+        {% if c == current_category %}
+            <li><strong><a href="{% url 'rango:show_category' c.slug %}">{{ c.name }}</a></strong></li>
         {% else %}
-            <li><strong>There are no categories present.</strong></li>
+            <li><a href="{% url 'rango:show_category' c.slug %}">{{ c.name }}</a></li>
         {% endif %}
-    </ul>
-{% endblock %}
+    {% endfor %}
+</ul>

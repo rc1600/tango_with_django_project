@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    Index
+    Homepage
 {% endblock %}
 
 {% block body_block %}
@@ -17,9 +17,9 @@
             <h2>Categories</h2>
             <ul>
                 {% for category in categories %}
-                <li>
-                    <a href="{% url 'rango:show_category' category.slug %}">{{ category.name }}</a>
-                </li>
+                    <li>
+                        <a href="{% url 'rango:show_category' category.slug %}">{{ category.name }}</a>
+                    </li>
                 {% endfor %}
             </ul>
         {% else %}
