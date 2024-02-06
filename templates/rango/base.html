@@ -12,15 +12,10 @@
     </title>
 </head>
 <body>
-    <div>
-        {% block body_block %}
-        {% endblock %}
-    </div>
     <hr>
     <div>
-        {% block sidebar_block %}
+        {% block sidebar_block1 %}
         {% get_category_list %}
-        {% get_category_list category %}
         {% endblock %}
     </div>
 
@@ -34,3 +29,4 @@
     </div>
 </body>
 </html>
+
