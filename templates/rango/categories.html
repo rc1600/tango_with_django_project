@@ -5,25 +5,17 @@
     Category List
 {% endblock %}
 
-{% block categories_block %}
+{% block body_block %}
     <ul>
         {% if categories %}
             {% for c in categories %}
-                {% if c == current_category %}
                 <li>
-                <strong>
-                    <a href="{% url 'rango:show_category' c.slug %}">{{ c.name }}</a>
-                </strong>
+                    {% if c == current_category %}
+                        <strong><a href="{% url 'rango:show_category' slug=c.slug %}">{{ c.name }}</a></strong>
+                    {% else %}
+                        <a href="{% url 'rango:show_category' slug=c.slug %}">{{ c.name }}</a>
+                    {% endif %}
                 </li>
-                {% else %}
-                <li>
-                <a href="{% url 'rango:show_category' c.slug %}">{{ c.name }}</a>
-                </li>
-                {% endif %}
-            {% endfor %}
-
-            {% for c in categories %}
-                <li><a href="{% url 'rango:show_category' c.slug %}">{{ c.name }}</a></li>
             {% endfor %}
         {% else %}
             <li><strong>There are no categories present.</strong></li>
