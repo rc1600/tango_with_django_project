@@ -84,6 +84,7 @@ def add_page(request, category_name_slug):
     context_dict = {'form': form, 'category': category}
     return render(request, 'rango/add_page.html', context=context_dict)
 
+
 def register(request):
     # A boolean value for telling the template
     # whether the registration was successful.
@@ -138,5 +139,7 @@ def register(request):
         profile_form = UserProfileForm()
 
     # Render the template depending on the context.
-    return render(request, 'rango/register.html', context={'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+    return render(request, 'rango/register.html', context={'user_form': user_form,
+                                                           'profile_form': profile_form,
+                                                           'registered': registered})
 
