@@ -64,10 +64,6 @@ def show_category(request, category_name_slug):
 
 
 def about(request):
-    # prints out whether the method is a GET or a POST
-    print(request.method)
-    # prints out the username, if no one is logged in it prints `AnonymousUser`
-    print(request.user)
     return render(request, 'rango/about.html', {})
 
 
