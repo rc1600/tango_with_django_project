@@ -27,6 +27,7 @@ def index(request):
         'pages': top_pages,
     }
 
+    request.session.set_test_cookie()
     return render(request, 'rango/index.html', context=context_dict)
 
 
@@ -48,6 +49,9 @@ def show_category(request, category_name_slug):
 def about(request):
     print(request.method)
     print(request.user)
+    if request.session.test_cookie_worked():
+        print("TEST COOKIE WORKED!")
+    request.session.delete_test_cookie()
     return render(request, 'rango/about.html', {})
 
 
