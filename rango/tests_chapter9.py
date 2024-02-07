@@ -519,21 +519,21 @@ class Chapter9ExerciseTests(TestCase):
         """
         Checks for template inheritance in restricted.html.
         """
-        template_base_path = os.path.join(settings.TEMPLATE_DIR, 'rango')
-        template_path = os.path.join(template_base_path, 'restricted.html')
+        template_path = os.path.join(settings.TEMPLATE_DIR, 'rango', 'restricted.html')
 
-        template_str = get_template(template_path)
+        with open(template_path, 'r') as template_file:
+            template_content = template_file.read()
+
         full_title_pattern = r'<title>(\s*|\n*)Rango(\s*|\n*)-(\s*|\n*)Restricted Page(\s*|\n*)</title>'
         block_title_pattern = r'{% block title_block %}(\s*|\n*)Restricted Page(\s*|\n*){% (endblock|endblock title_block) %}'
 
         user_object = create_user_object()
         self.client.login(username='testuser', password='testabc123')
-        request = self.client.get(reverse('rango:restricted'))
-        content = request.content.decode('utf-8')
+        response = self.client.get(reverse('rango:restricted'))
+        content = response.content.decode('utf-8')
 
         self.assertTrue(re.search(full_title_pattern, content), f"{FAILURE_HEADER}The <title> of the response for 'rango:restricted' is not correct. Check your restricted.html template, and try again.{FAILURE_FOOTER}")
-        self.assertTrue(re.search(block_title_pattern, template_str), f"{FAILURE_HEADER}Is restricted.html using template inheritance? Is your <title> block correct?{FAILURE_FOOTER}")
-    
+        self.assertTrue(re.search(block_title_pattern, template_content), f"{FAILURE_HEADER}Is restricted.html using template inheritance? Is your <title> block correct?{FAILURE_FOOTER}")
     def test_bad_add_page(self):
         """
         Tests to see if a page cannot be added when not logged in.
