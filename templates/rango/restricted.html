@@ -1,7 +1,11 @@
 {% extends 'rango/base.html' %}
 
 {% block title_block %}
-    Restricted Page
+    {% if user.is_authenticated %}
+        Restricted Page
+    {% else %}
+        Please Log In or Register
+    {% endif %}
 {% endblock %}
 
 {% block body_block %}
