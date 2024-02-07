@@ -46,7 +46,14 @@ def show_category(request, category_name_slug):
 def about(request):
     print(request.method)
     print(request.user)
-    return render(request, 'rango/about.html', {})
+    # Call the visitor_cookie_handler function to handle the visit count cookie
+    visitor_cookie_handler(request)
+
+    # Get the visit count from the session
+    visits = request.session['visits']
+
+    # Render the About page template with the visit count
+    return render(request, 'rango/about.html', {'visits': visits})
 
 
 @login_required
