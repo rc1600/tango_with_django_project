@@ -30,6 +30,7 @@ def index(request):
     return render(request, 'rango/index.html', context=context_dict)
 
 
+@login_required
 def show_category(request, category_name_slug):
     context_dict = {}
     try:

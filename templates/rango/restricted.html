@@ -1,19 +1,12 @@
 {% extends 'rango/base.html' %}
 
 {% block title_block %}
-    {% if user.is_authenticated %}
-        Restricted Page
-    {% else %}
-        Please Log In or Register
-    {% endif %}
+    Restricted Page
 {% endblock %}
 
 {% block body_block %}
     <h1>Restricted Page</h1>
-    {% if not user.is_authenticated %}
-        <p>This page is restricted to registered users only. Please <a href="{% url 'rango:login' %}">login</a> or <a href="{% url 'rango:register' %}">register</a> to access this page.</p>
-    {% else %}
-        <p>You are already logged in. You have access to this restricted page.</p>
-    {% endif %}
+    <p>This page is restricted to registered users only. Please <a href="{% url 'rango:login' %}">login</a> or <a href="{% url 'rango:register' %}">register</a> to access this page.</p>
 {% endblock %}
+
 
