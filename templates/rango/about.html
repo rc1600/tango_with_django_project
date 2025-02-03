@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+{% load static %} 
+
+<html>
+    <head>
+        <title>Rango - About</title>
+    </head>
+
+    <body>
+        <h1>Rango says...</h1>
+        <p>here is the about page.</p>
+
+        <p> This tutorial has been put together by <strong>Robbie Copeland</strong>.</p>
+
+        <a href="{% url 'index' %}">Back to Index</a>
+        
+        
+        <div>
+            <img src="{% static 'images/rango.jpg' %}" alt="Picture of Rango" />
+        </div>
+
+        <div>
+            <img src="/media/cat.jpg" alt="Picture of a Cat" />
+        </div>
+    </body>
+</html>
