@@ -1,21 +1,53 @@
-<!DOCTYPE html>
+{% extends 'rango/base.html' %}
+{% load static %}
 
-{% load static %} 
+{% block title_block %}
+    Homepage
+{% endblock %}
 
-<html>
-    <head>
-        <title>Rango</title>
-    </head>
+{% block body_block %}
+    <h1>Rango says...</h1>
+    <div>
+        {% if user.is_authenticated %}
+            howdy {{ user.username }}!
+        {% else %}
+            hey there partner!
+        {% endif %}
+        <br />
+        <strong>{{ boldmessage }}</strong><br />
+    </div>
 
-    <body>
-        <h1>Rango says...</h1>
-        <div>
-            hey there partner! <br />
-            <strong>{{ boldmessage }}</strong><br />
-        </div>
-        <div>
-            <a href="/rango/about/">About</a><br />
-            <img src="{% static 'images/rango.jpg' %}" alt="Picture of Rango" />
-        </div>
-    </body>
-</html>
+    <div>
+        {% if categories %}
+            <h2>Categories</h2>
+            <ul>
+                {% for category in categories %}
+                    <li>
+                        <a href="{% url 'rango:show_category' category.slug %}">{{ category.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No categories present.</p>
+        {% endif %}
+    </div>
+
+    <div id="pages">
+        {% if top_pages %}
+            <h2>Most Viewed Pages</h2>
+            <ul>
+                {% for page in top_pages %}
+                    <li>
+                        <a href="{{ page.url }}" target="_blank">{{ page.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No pages present.</p>
+        {% endif %}
+    </div>
+
+    <div>
+        <img src="{% static 'images/rango.jpg' %}" alt="Picture of Rango" />
+    </div>
+{% endblock %}
