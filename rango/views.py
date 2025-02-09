@@ -13,31 +13,34 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from datetime import datetime
 
 def index(request):
-    # Query the database for a list of ALL categories currently stored.
-    # Order the categories by the number of likes in descending order.
-    # Retrieve the top 5 only-- or all if less than 5.
     category_list = Category.objects.order_by('-likes')[:5]
+    top_pages = Page.objects.order_by('-views')[:5]
 
-    # Query the top 5 most viewed pages.
-    page_list = Page.objects.order_by('-views')[:5]
+    visitor_cookie_handler(request)  # Call the function to handle visits cookie
 
-    context_dict = {}
-    context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
-    context_dict['categories'] = category_list
-    context_dict['pages'] = page_list
+    context_dict = {
+        'boldmessage': 'Crunchy, creamy, cookie, candy, cupcake!',
+        'categories': category_list,
+        'top_pages': top_pages,
+    }
 
-    # Render the response and send it back!
-    return render(request, 'rango/index.html', context=context_dict)
+    return render(request, 'rango/index.html', context_dict)
 
 
 def about(request):
-    # prints out whether the method is a GET or a POST
     print(request.method)
-    # prints out the user name, if no one is logged in it prints `AnonymousUser`
     print(request.user)
-    return render(request, 'rango/about.html', {})
+    # Call the visitor_cookie_handler function to handle the visit count cookie
+    visitor_cookie_handler(request)
+
+    # Get the visit count from the session
+    visits = request.session['visits']
+
+    # Render the About page template with the visit count
+    return render(request, 'rango/about.html', {'visits': visits})
 
 
 @login_required
@@ -179,3 +182,23 @@ def user_logout(request):
     logout(request)
     # Take the user back to the homepage.
     return redirect(reverse('rango:index'))
+
+def visitor_cookie_handler(request):
+    visits = int(get_server_side_cookie(request, 'visits', '1'))
+    last_visit_cookie = get_server_side_cookie(request, 'last_visit', str(datetime.now()))
+    last_visit_time = datetime.strptime(last_visit_cookie[:-7], "%Y-%m-%d %H:%M:%S")
+
+    # Update the cookie only if it's been more than a day since the last visit
+    if (datetime.now() - last_visit_time).days > 0:
+        visits += 1
+        request.session['last_visit'] = str(datetime.now())
+        request.session['visits'] = visits  # Update the session with the new value
+    else:
+        request.session['last_visit'] = last_visit_cookie
+        request.session['visits'] = visits  # Set the session with the existing value
+
+def get_server_side_cookie(request, cookie, default_val=None):
+    val = request.session.get(cookie)
+    if not val:
+        val = default_val
+    return val
